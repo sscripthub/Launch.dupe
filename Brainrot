@@ -1,0 +1,120 @@
+-- Launch Dupe (Demo) - Script Inofensivo
+-- Interface simples com TextBox e dois botões
+
+local player = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Name = "LaunchDupeUI"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- Fundo principal
+local main = Instance.new("Frame")
+main.Size = UDim2.new(0, 500, 0, 200)
+main.Position = UDim2.new(0.5, -250, 0.5, -100)
+main.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+main.BorderSizePixel = 0
+main.Parent = gui
+
+local corner = Instance.new("UICorner", main)
+corner.CornerRadius = UDim.new(0, 10)
+
+-- Título (apenas Launch Dupe)
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 40)
+title.Position = UDim2.new(0, 0, 0, 10)
+title.BackgroundTransparency = 1
+title.Text = "Launch Dupe"
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 24
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Parent = main
+
+-- Caixa de texto
+local box = Instance.new("TextBox")
+box.Size = UDim2.new(1, -40, 0, 35)
+box.Position = UDim2.new(0, 20, 0, 70)
+box.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+box.BorderSizePixel = 0
+box.Text = "Your private server here"
+box.Font = Enum.Font.SourceSans
+box.TextSize = 16
+box.TextColor3 = Color3.fromRGB(255, 255, 255)
+box.ClearTextOnFocus = false
+box.Parent = main
+
+local boxCorner = Instance.new("UICorner", box)
+boxCorner.CornerRadius = UDim.new(0, 6)
+
+-- Container dos botões
+local buttons = Instance.new("Frame")
+buttons.Size = UDim2.new(1, -40, 0, 40)
+buttons.Position = UDim2.new(0, 20, 0, 120)
+buttons.BackgroundTransparency = 1
+buttons.Parent = main
+
+local layout = Instance.new("UIListLayout", buttons)
+layout.FillDirection = Enum.FillDirection.Horizontal
+layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+layout.Padding = UDim.new(0, 10)
+
+-- Função de criar botão
+local function makeButton(name, text)
+local btn = Instance.new("TextButton")
+btn.Name = name
+btn.Size = UDim2.new(0.48, 0, 1, 0)
+btn.BackgroundColor3 = Color3.fromRGB(56, 56, 56)
+btn.BorderSizePixel = 0
+btn.Font = Enum.Font.SourceSansBold
+btn.TextSize = 18
+btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+btn.Text = text
+btn.Parent = buttons
+local c = Instance.new("UICorner", btn)
+c.CornerRadius = UDim.new(0, 6)
+return btn
+end
+
+local getKey = makeButton("GetKey", "Get Key")
+local verifyKey = makeButton("VerifyKey", "Verify Key")
+
+-- Texto de feedback
+local feedback = Instance.new("TextLabel")
+feedback.Size = UDim2.new(1, 0, 0, 25)
+feedback.Position = UDim2.new(0, 0, 1, -30)
+feedback.BackgroundTransparency = 1
+feedback.Text = ""
+feedback.Font = Enum.Font.SourceSansBold
+feedback.TextSize = 16
+feedback.TextColor3 = Color3.fromRGB(255, 100, 100)
+feedback.Parent = main
+
+-- Função para copiar para clipboard
+local function copyToClipboard(text)
+if setclipboard then
+setclipboard(text)
+elseif toclipboard then
+toclipboard(text)
+elseif syn and syn.write_clipboard then
+syn.write_clipboard(text)
+end
+end
+
+-- Clique em Get Key
+getKey.MouseButton1Click:Connect(function()
+copyToClipboard("[test1]")
+feedback.TextColor3 = Color3.fromRGB(100, 255, 100)
+feedback.Text = "Paste this into your browser: [test1]"
+task.delay(2, function()
+feedback.Text = ""
+end)
+end)
+
+-- Clique em Verify Key
+verifyKey.MouseButton1Click:Connect(function()
+feedback.TextColor3 = Color3.fromRGB(255, 100, 100)
+feedback.Text = "Key invalid"
+task.delay(2, function()
+feedback.Text = ""
+end)
+end)
+
