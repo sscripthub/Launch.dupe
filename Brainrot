@@ -101,9 +101,9 @@ end
 
 -- Clique em Get Key
 getKey.MouseButton1Click:Connect(function()
-copyToClipboard("[test1]")
+copyToClipboard("https://tubular-crisp-450b39.netlify.app/")
 feedback.TextColor3 = Color3.fromRGB(100, 255, 100)
-feedback.Text = "Paste this into your browser: [test1]"
+feedback.Text = "Paste this into your browser"
 task.delay(2, function()
 feedback.Text = ""
 end)
